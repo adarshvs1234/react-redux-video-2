@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter App</title>
+</head>
+<body>
+    <button id="increment">Increment</button>
+    <label id="value">--</label>
+    <button id="decrement">Decrement</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.2.1/redux.min.js"></script>
+    <script>
+        const { legacy_createStore } = Redux
+
+const initialState = {
+    value: 0
+};
+
+function appReducer(prevState = initialState, action) {
+
+    switch(action.type){
+
+        case 'increment':
+            return{
+                ...prevState,
+                value:prevState.value+1
+            }
+        case 'decrement':
+            return{
+                ...prevState,
+                value:prevState.value-1
+            }
+            default:
+            return prevState;
+    }
+   
+}
+
+const store = legacy_createStore(appReducer);
+const state = store.getState();
+
+store.subscribe(()=>{
+    console.log(store.getState());
+    document.getElementById('value').innerText = store.getState()git .value;
+    
+})
+
+
+document.getElementById('value').innerText = state.value;
+
+
+document.getElementById('increment').onclick = () => {
+
+   store.dispatch({
+    type:'increment'
+   })
+}; 
+
+document.getElementById('decrement').onclick = () => {
+
+    store.dispatch({
+    type:'decrement'
+   })
+}; 
+     
+     </script>
+</body>
+</html>
+
